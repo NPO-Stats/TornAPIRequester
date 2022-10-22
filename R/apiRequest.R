@@ -22,7 +22,8 @@
 #' @return The response of the API, as a list object
 #' @export
 #'
-#' @examples
+#TODO: Add examples to documentation:
+## @examples
 apiRequest <- function(section,
                        selection,
                        IDtoSend="",
