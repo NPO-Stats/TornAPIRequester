@@ -2,7 +2,8 @@
 # TornAPIRequester
 
 <!-- badges: start -->
-<!-- badges: end -->
+  [![Codecov test coverage](https://codecov.io/gh/NPO-Stats/TornAPIRequester/branch/master/graph/badge.svg)](https://app.codecov.io/gh/NPO-Stats/TornAPIRequester?branch=master)
+  <!-- badges: end -->
 
 Sends requests to the Torn API, with extra safety checks and error handling. Also includes built-in support for pooling of API keys, in a way that respects the rate limit.
 
