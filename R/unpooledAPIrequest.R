@@ -121,7 +121,7 @@ unpooledAPIRequest <- function(keyToUse,
   # Pull it, and let fromJSON turn the JSON into a nested list structure. We need some error handling here, because if we get an error
   # in the JSON package we really want to know exactly which request caused it, since we'll often be calling this function tens of thousands
   # of times.
-  requestResult <- tryCatch(fromJSON(requestString),
+  requestResult <- tryCatch(jsonlite::fromJSON(requestString),
                             error = function(c) {
                               # We do some foul dark magic to c to pass it on while attaching some new information to it.
                               # First we cast it to a fromJSONerror class error... By just modifying its class attribute:
