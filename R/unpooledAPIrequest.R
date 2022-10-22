@@ -1,4 +1,4 @@
-#' unpooledAPIRequest
+#' Make a request from the Torn API with a specific key
 #'
 #' Sends a single request to the Torn API using a specified key, instead of the pooled
 #' behaviour of the apiRequest function. This is intended for when you are requesting a
@@ -24,7 +24,7 @@
 #' you want. Expected as a vector of stats. Note that the API does not permit more than ten stats at a time.
 #' @param errorBehaviour
 #'
-#' @return The response of the API.
+#' @return The response of the API, as a list object
 #' @export
 #'
 #

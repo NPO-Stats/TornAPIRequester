@@ -2,7 +2,7 @@
 % Please edit documentation in R/unpooledAPIrequest.R
 \name{unpooledAPIRequest}
 \alias{unpooledAPIRequest}
-\title{unpooledAPIRequest}
+\title{Make a request from the Torn API with a specific key}
 \usage{
 unpooledAPIRequest(
   keyToUse,
@@ -37,7 +37,7 @@ you want. Expected as a vector of stats. Note that the API does not permit more 
 \item{errorBehaviour}{}
 }
 \value{
-The response of the API.
+The response of the API, as a list object
 }
 \description{
 Sends a single request to the Torn API using a specified key, instead of the pooled
