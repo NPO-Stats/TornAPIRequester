@@ -30,7 +30,7 @@
 #
 #TODO: Add examples later:
 # #' @examples
-unpooledAPIRequest <- function(keyToUse,
+unpooledAPIrequest <- function(keyToUse,
                                section,
                                selection,
                                IDtoSend="",

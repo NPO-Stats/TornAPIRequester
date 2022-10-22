@@ -2,4 +2,4 @@
 
 export(apiRequest)
 export(initializeAPIrequester)
-export(unpooledAPIRequest)
+export(unpooledAPIrequest)
