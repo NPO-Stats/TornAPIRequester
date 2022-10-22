@@ -21,5 +21,8 @@ initializeAPIrequester <- function(appName, apiKeys) {
     .apiRequesterData$apiKeys <- apiKeys
   }
 
+  .apiRequesterData$numAPIkeys <- length(apiKeys)
+  .apiRequesterData$mostRecentKeyUsed <- 1
+  .apiRequesterData$APIkeysMostRecentUse <- lapply(1:.apiRequesterData$numAPIkeys, function(n) Sys.time())
   return(TRUE)
 }
