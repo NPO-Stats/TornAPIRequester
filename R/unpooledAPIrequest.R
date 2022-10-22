@@ -22,7 +22,7 @@
 #' from which you want the data.
 #' @param personalStatsToRequest If requesting past personal stats data, this is where you specify the stats
 #' you want. Expected as a vector of stats. Note that the API does not permit more than ten stats at a time.
-#' @param errorBehaviour
+#' @param errorBehaviour Soon to be deprecated.
 #'
 #' @return The response of the API, as a list object
 #' @export
