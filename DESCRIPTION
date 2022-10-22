@@ -9,3 +9,4 @@ Description: Sends requests to the Torn API, with extra safety checks and error 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.2.1
