@@ -93,11 +93,15 @@ unpooledAPIRequest <- function(keyToUse,
     }
   }
 
-  # Construct the URL for our API request, starting with the comment:
+  # Construct the URL for our API request.
+  # We start with the comment, for which we need the appName. Since we want this function to work
+  # even if initializeAPIrequester hasn't been called yet, a little bit of trickery is needed:
+  appName <- tryCatch(.apiRequesterData$appName,
+                      error = function(e) { return("An Uninitialized TornAPIRequester Project")})
   if (missing(comment) || comment == "") {
-    comment <- "White Stag"
+    comment <- appName
   } else {
-    comment <- paste0("White Stag: ",comment)
+    comment <- paste0(appName,": ",comment)
   }
   comment <- gsub(" ","%20",comment) # No unencoded whitespace in URLs!
   # and now we make the URL itself:
