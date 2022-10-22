@@ -2,6 +2,7 @@
 # TornAPIRequester
 
 <!-- badges: start -->
+  [![Build Status](https://app.travis-ci.com/NPO-Stats/TornAPIRequester.svg?token=ySZu5YtBszXRx8KxzXJY&branch=master)](https://app.travis-ci.com/NPO-Stats/TornAPIRequester)
   [![Codecov test coverage](https://codecov.io/gh/NPO-Stats/TornAPIRequester/branch/master/graph/badge.svg)](https://app.codecov.io/gh/NPO-Stats/TornAPIRequester?branch=master)
   <!-- badges: end -->
 
