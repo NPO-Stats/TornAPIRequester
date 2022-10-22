@@ -18,6 +18,9 @@
 # Constructor of conditions. Copypasted from: http://adv-r.had.co.nz/Exceptions-Debugging.html#condition-handling
 # in the "Custom signal classes" section.
 condition <- function(subclass, message, call = sys.call(-1), ...) {
+  if (missing(subclass) || missing(message)) {
+    stop("Tried to call condition with missing subclass or message.")
+  }
   structure(
     class = c(subclass, "condition"),
     list(message = message, call = call),
@@ -46,6 +49,9 @@ is.condition <- function(x) inherits(x, "condition")
 # If not caught in a tryCatch, a namedStop behaves precisely like a normal stop().
 namedStop <- function(errorName, message, call = sys.call(-1),
                       ...) {
+  if (missing(errorName) || missing(message)) {
+    stop("An error occurred when creating your error: Called namedStop with missing errorName or message.")
+  }
   c <- condition(c(errorName, "error"), message, call = call, ...)
   stop(c)
 }
