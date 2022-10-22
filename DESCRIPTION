@@ -1,11 +1,11 @@
 Package: TornAPIRequester
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Sends Requests to the Torn API
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: saxasm
+Maintainer: saxasm <saxasm#9869 / saxasm [2720534]>
+Description: Sends requests to the Torn API, with extra safety checks and error handling.
+    Also includes built-in support for pooling of API keys, in a way that respects the rate limit.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
