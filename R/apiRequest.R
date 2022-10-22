@@ -56,7 +56,7 @@ apiRequest <- function(section,
 
   # Now we are sure that the key is fresh enough to be reused, so we can
   # proceed to make the request:
-  queryResult <- unpooledAPIrequest(.apiRequesterData$APIkeys[.apiRequesterData$mostRecentKeyUsed],
+  queryResult <- unpooledAPIrequest(.apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
                                     section=section, selection = selection,
                                     IDtoSend = IDtoSend,
                                     comment = comment,
