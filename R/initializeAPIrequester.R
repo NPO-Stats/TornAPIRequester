@@ -14,8 +14,10 @@ initializeAPIrequester <- function(appName, apiKeys) {
   # Start by checking if the apiRequesterData environment already exists. If
   # it does, we will update its contents, if not, we start by creating it.
   if (!exists(".apiRequesterData")) {
-    .apiRequesterData <<- rlang::env(appName = appName,
-                                     apiKeys = apiKeys)
+    .apiRequesterData <<- rlang::env(
+      appName = appName,
+      apiKeys = apiKeys
+    )
   } else {
     .apiRequesterData$appName <- appName
     .apiRequesterData$apiKeys <- apiKeys

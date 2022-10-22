@@ -22,14 +22,14 @@
 #' @return The response of the API, as a list object
 #' @export
 #'
-#TODO: Add examples to documentation:
+# TODO: Add examples to documentation:
 ## @examples
 apiRequest <- function(section,
                        selection,
-                       IDtoSend="",
-                       comment="",
-                       timestampToSend="",
-                       personalStatsToRequest=c(),
+                       IDtoSend = "",
+                       comment = "",
+                       timestampToSend = "",
+                       personalStatsToRequest = c(),
                        errorBehaviour = "silent") {
   # The algorithm we use is to rotate through the key, and store for each
   # key when it was most recently used. If that is more recently than 6/10s
@@ -41,7 +41,8 @@ apiRequest <- function(section,
 
   # Update which key to use:
   .apiRequesterData$mostRecentKeyUsed <- ifelse(.apiRequesterData$mostRecentKeyUsed == .apiRequesterData$numAPIkeys,
-                                         1, .apiRequesterData$mostRecentKeyUsed + 1)
+    1, .apiRequesterData$mostRecentKeyUsed + 1
+  )
   # Record the current time:
   currentTime <- Sys.time()
 
@@ -50,19 +51,21 @@ apiRequest <- function(section,
 
   # If the key was used too recently, we wait a bit first:
   timeSinceLastCall <- currentTime - .apiRequesterData$APIkeysMostRecentUse[[.apiRequesterData$mostRecentKeyUsed]]
-  if (timeSinceLastCall < 6/10) {
-    Sys.sleep(6/10 + 0.0005 - timeSinceLastCall)
+  if (timeSinceLastCall < 6 / 10) {
+    Sys.sleep(6 / 10 + 0.0005 - timeSinceLastCall)
   }
 
   # Now we are sure that the key is fresh enough to be reused, so we can
   # proceed to make the request:
-  queryResult <- unpooledAPIrequest(.apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
-                                    section=section, selection = selection,
-                                    IDtoSend = IDtoSend,
-                                    comment = comment,
-                                    timestampToSend = timestampToSend,
-                                    personalStatsToRequest=personalStatsToRequest,
-                                    errorBehaviour = errorBehaviour)
+  queryResult <- unpooledAPIrequest(
+    .apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
+    section = section, selection = selection,
+    IDtoSend = IDtoSend,
+    comment = comment,
+    timestampToSend = timestampToSend,
+    personalStatsToRequest = personalStatsToRequest,
+    errorBehaviour = errorBehaviour
+  )
 
   # and we return the result:
   return(queryResult)
