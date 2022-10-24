@@ -4,6 +4,10 @@
 #' the name of your app, which is passed into the API as a comment and visible to the
 #' owners of the API keys used in their API settings page.
 #'
+#' There are three ways of passing the required information into the function: a) Through the
+#' named arguments, b) by passing a JSON string or filepath/URL to a JSON file in JSONinitData, or
+#' c) by having such a JSON string/path to a string in your TAPIR_INIT environment variable.
+#'
 #' @param appName The name of your app
 #' @param apiKeys The API keys to be used for the pooling of API keys in apiRequest
 #' @param apiKeyNames Names for the API keys, that will be displayed in error messages. Should normally be the name of the owner of the key. Optional, but very useful for error messages.
@@ -13,8 +17,12 @@
 #' @export
 
 initializeAPIrequester <- function(appName = NULL, apiKeys = NULL, apiKeyNames = NULL, JSONinitData = NULL) {
-  # We start by determining if we are getting our data from the JSON or from the parameters of our function.
-  # If we get both, the JSON takes precedence.
+  # First off, we check if the TAPIR_INIT environment variable has been set, in which case we will treat its
+  # value as our JSONinitData parameter:
+  if ("TAPIR_INIT" %in% names(Sys.getenv())) {
+    JSONinitData <- Sys.getenv("TAPIR_INIT")
+  }
+  # Then, if we have JSON init data, we parse that and treat its contents as the values of our parameters:
   if (!missing(JSONinitData)) {
     # Try to read the JSON, and verify that it has the right structure:
     jsonData <- jsonlite::fromJSON(JSONinitData)
@@ -31,6 +39,10 @@ initializeAPIrequester <- function(appName = NULL, apiKeys = NULL, apiKeyNames =
     # If we did not get any JSON data, we need to check that the other data we need is present.
     stop("Called initializeAPIrequester with neither JSON data nor data in arguments.")
   }
+
+  # Now, irrespective of how we got our data, it is in the appName/apiKeys/keyNames variables,
+  # and we can proceed as if that was how we got the data.
+
   # Start by checking if the apiRequesterData environment already exists. If
   # it does, we will update its contents, if not, we start by creating it.
   if (!exists(".apiRequesterData")) {

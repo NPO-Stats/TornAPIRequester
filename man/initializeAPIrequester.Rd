@@ -28,3 +28,8 @@ Used to set the keys to be used for the API key pooling. This function also sets
 the name of your app, which is passed into the API as a comment and visible to the
 owners of the API keys used in their API settings page.
 }
+\details{
+There are three ways of passing the required information into the function: a) Through the
+named arguments, b) by passing a JSON string or filepath/URL to a JSON file in JSONinitData, or
+c) by having such a JSON string/path to a string in your TAPIR_INIT environment variable.
+}
