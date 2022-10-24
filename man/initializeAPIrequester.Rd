@@ -4,12 +4,21 @@
 \alias{initializeAPIrequester}
 \title{Initialize the API requester}
 \usage{
-initializeAPIrequester(appName, apiKeys)
+initializeAPIrequester(
+  appName = NULL,
+  apiKeys = NULL,
+  apiKeyNames = NULL,
+  JSONinitData = NULL
+)
 }
 \arguments{
 \item{appName}{The name of your app}
 
 \item{apiKeys}{The API keys to be used for the pooling of API keys in apiRequest}
+
+\item{apiKeyNames}{Names for the API keys, that will be displayed in error messages. Should normally be the name of the owner of the key. Optional, but very useful for error messages.}
+
+\item{JSONinitData}{A string that can be parsed by the jsonlite-package JSON reader. Could be actual JSON in a string, or the path to a file or a URL from which to read it. Note that this format requires names for the API keys.}
 }
 \value{
 TRUE, if initialization was successful.
