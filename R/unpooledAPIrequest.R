@@ -160,9 +160,14 @@ unpooledAPIrequest <- function(keyToUse,
       10, # 10 => Key owner is in federal jail : Current key can't be used because owner is in federal jail.
       13 # 13 => The key is temporarily disabled due to owner inactivity : The key owner hasn't been online for more than 7 days.
     )) {
+      if (!is.null(names(keyToUse))) {
+        fullErrorMessage <- paste0("An error with the key being used (", names(keyToUse), ") occurred. You must fix this before attempting any further requests. Specifically, the error that occurred was ", errorMessage)
+      } else {
+        fullErrorMessage <- paste0("An error with the key being used occurred. You must fix this before attempting any further requests. Specifically, the error that occurred was ", errorMessage)
+      }
       namedStop(
         errorName = "APIkeyError",
-        message = paste0("An error with the key being used (", keyToUse, ") occurred. You must fix this before attempting any further requests. Specifically, the error that occurred was ", errorMessage)
+        message = fullErrorMessage
       )
     }
     # Errors of excessive use or abuse will also always throw:
