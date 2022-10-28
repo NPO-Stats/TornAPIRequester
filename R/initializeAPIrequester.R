@@ -37,7 +37,7 @@ initializeAPIrequester <- function(appName = NULL, apiKeys = NULL, apiKeyNames =
     apiKeyNames <- names(jsonData$keys)
   } else if (missing(appName) || missing(apiKeys)) {
     # If we did not get any JSON data, we need to check that the other data we need is present.
-    stop("Called initializeAPIrequester with neither JSON data nor data in arguments.")
+    stop("Called initializeAPIrequester with neither JSON data as environment variable or argument nor data in arguments.")
   }
 
   # Now, irrespective of how we got our data, it is in the appName/apiKeys/keyNames variables,
