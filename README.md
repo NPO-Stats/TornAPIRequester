@@ -2,9 +2,9 @@
 # TornAPIRequester
 
 <!-- badges: start -->
-  [![Build Status](https://app.travis-ci.com/NPO-Stats/TornAPIRequester.svg?token=ySZu5YtBszXRx8KxzXJY&branch=master)](https://app.travis-ci.com/NPO-Stats/TornAPIRequester)
-  [![codecov](https://codecov.io/gh/NPO-Stats/TornAPIRequester/branch/master/graph/badge.svg?token=EKTL0CCCXI)](https://codecov.io/gh/NPO-Stats/TornAPIRequester)
-  <!-- badges: end -->
+[![check-standard](https://github.com/NPO-Stats/TornAPIRequester/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/NPO-Stats/TornAPIRequester/actions/workflows/check-standard.yaml)
+[![codecov](https://codecov.io/gh/NPO-Stats/TornAPIRequester/branch/master/graph/badge.svg?token=EKTL0CCCXI)](https://codecov.io/gh/NPO-Stats/TornAPIRequester)
+<!-- badges: end -->
 
 Sends requests to the Torn API, with extra safety checks and error handling. Also includes built-in support for pooling of API keys, in a way that respects the rate limit.
 
