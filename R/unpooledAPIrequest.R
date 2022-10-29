@@ -40,38 +40,38 @@ unpooledAPIrequest <- function(keyToUse,
                                errorBehaviour = "silent") {
   # We need to do some input validation:
   if (!((length(section) == 1) && (section %in% c("user", "property", "faction", "company", "market", "torn")))) {
-    stop("Invalid choice of section for API request!")
+    namedStop("invalidParameterError", "Invalid choice of section for API request!")
   }
   # We could theoretically list the exact possible choices of selection, but that
   # is liable to change, so we just check that we are getting a string without spaces:
   if (!(is.character(selection) && (length(selection) == 1) && !grepl("\\s", selection))) {
-    stop("Invalid choice of selection for API request!")
+    namedStop("invalidParameterError", "Invalid choice of selection for API request!")
   }
   # The supplied ID needs to be either an integer or a string containing an int or missing:
   if (!(missing(IDtoSend) || IDtoSend == "" || ((length(IDtoSend) == 1) && (is.integer(IDtoSend) || !is.na(suppressWarnings(as.integer(IDtoSend))))))) {
-    stop("Invalid choice of ID to send for API request!")
+    namedStop("invalidParameterError", "Invalid choice of ID to send for API request!")
   }
   # The supplied comment needs to be either missing, or a single string of length less than 20 characters:
   if (!(missing(comment) || (length(comment) == 1 && nchar(comment) < 21))) {
-    stop("Invalid choice of comment to send for API request!")
+    namedStop("invalidParameterError", "Invalid choice of comment to send for API request!")
   }
   # The supplied timestamp needs to be either missing/the empty string, or a single numeric
   # value between the start of Torn and the current time:
   if (!(missing(timestampToSend) || timestampToSend == "")) {
     if (length(timestampToSend) == 1 && is.numeric(timestampToSend)) {
       if (timestampToSend != as.integer(timestampToSend)) {
-        stop("timestamp needs to be an integer value")
+        namedStop("invalidParameterError", "timestamp needs to be an integer value")
       } else {
         if (timestampToSend > as.integer(Sys.time())) {
-          stop("timestamp cannot be in the future!")
+          namedStop("invalidParameterError", "timestamp cannot be in the future!")
         } else {
           if (timestampToSend < 1065306877) {
-            stop("timestamp cannot be before the start of Torn!")
+            namedStop("invalidParameterError", "timestamp cannot be before the start of Torn!")
           }
         }
       }
     } else {
-      stop("timestamp for API request needs to be a single numeric value")
+      namedStop("invalidParameterError", "timestamp for API request needs to be a single numeric value")
     }
   }
   # If we are requesting some personalstats, they all need to be valid choices, there needs to be at most
@@ -79,17 +79,17 @@ unpooledAPIrequest <- function(keyToUse,
   if (!(missing(personalStatsToRequest) || length(personalStatsToRequest) == 0)) {
     # Must all be valid options:
     if (!all(personalStatsToRequest %in% c("useractivity", "activestreak", "bestactivestreak", "itemsbought", "pointsbought", "itemsboughtabroad", "weaponsbought", "itemssent", "auctionswon", "auctionsells", "attackswon", "attackslost", "attacksdraw", "bestkillstreak", "moneymugged", "attacksstealthed", "attackhits", "attackmisses", "attackdamage", "attackcriticalhits", "respectforfaction", "onehitkills", "defendswon", "defendslost", "defendsstalemated", "bestdamage", "roundsfired", "yourunaway", "theyrunaway", "highestbeaten", "peoplebusted", "failedbusts", "peoplebought", "peopleboughtspent", "virusescoded", "cityfinds", "traveltimes", "bountiesplaced", "bountiesreceived", "bountiescollected", "totalbountyreward", "revives", "revivesreceived", "medicalitemsused", "statenhancersused", "trainsreceived", "totalbountyspent", "drugsused", "overdosed", "meritsbought", "personalsplaced", "classifiedadsplaced", "mailssent", "friendmailssent", "factionmailssent", "companymailssent", "spousemailssent", "largestmug", "cantaken", "exttaken", "kettaken", "lsdtaken", "opitaken", "shrtaken", "spetaken", "pcptaken", "xantaken", "victaken", "chahits", "heahits", "axehits", "grehits", "machits", "pishits", "rifhits", "shohits", "smghits", "piehits", "slahits", "argtravel", "mextravel", "dubtravel", "hawtravel", "japtravel", "lontravel", "soutravel", "switravel", "chitravel", "cantravel", "dumpfinds", "dumpsearches", "itemsdumped", "daysbeendonator", "caytravel", "jailed", "hospital", "attacksassisted", "bloodwithdrawn", "networth", "missionscompleted", "contractscompleted", "dukecontractscompleted", "missioncreditsearned", "consumablesused", "candyused", "alcoholused", "energydrinkused", "nerverefills", "unarmoredwon", "h2hhits", "organisedcrimes", "territorytime", "territoryjoins", "arrestsmade", "tokenrefills", "booksread", "traveltime", "boostersused", "rehabs", "rehabcost", "awards", "receivedbountyvalue", "racingskill", "raceswon", "racesentered", "racingpointsearned", "specialammoused", "cityitemsbought", "hollowammoused", "tracerammoused", "piercingammoused", "incendiaryammoused", "attackswonabroad", "defendslostabroad", "rankedwarringwins", "retals", "elo", "jobpointsused", "reviveskill", "itemslooted", "refills"))) {
-      stop("Invalid personal stat requested")
+      namedStop("invalidParameterError", "Invalid personal stat requested")
     }
     # Must be no more than ten of them:
     if (length(personalStatsToRequest) > 10) {
-      stop("Can only request at most ten past personal stat entries at a time.")
+      namedStop("invalidParameterError", "Can only request at most ten past personal stat entries at a time.")
     }
     # Other fields must be the right shape:
     if (!(section == "user" &&
       selection == "personalstats" &&
       !(missing(timestampToSend) || timestampToSend == ""))) {
-      stop("Specified personal stats to request, but other parameters are not for such a request.")
+      namedStop("invalidParameterError", "Specified personal stats to request, but other parameters are not for such a request.")
     }
   }
 
