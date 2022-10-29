@@ -48,7 +48,7 @@ unpooledAPIrequest <- function(keyToUse,
     namedStop("invalidParameterError", "Invalid choice of selection for API request!")
   }
   # The supplied ID needs to be either an integer or a string containing an int or missing:
-  if (!(missing(IDtoSend) || IDtoSend == "" || ((length(IDtoSend) == 1) && (is.integer(IDtoSend) || !is.na(suppressWarnings(as.integer(IDtoSend))))))) {
+  if (!(missing(IDtoSend) || identical(IDtoSend, "") || ((length(IDtoSend) == 1) && (is.integer(IDtoSend) || !is.na(suppressWarnings(as.integer(IDtoSend))))))) {
     namedStop("invalidParameterError", "Invalid choice of ID to send for API request!")
   }
   # The supplied comment needs to be either missing, or a single string of length less than 20 characters:
