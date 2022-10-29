@@ -31,6 +31,11 @@ apiRequest <- function(section,
                        timestampToSend = "",
                        personalStatsToRequest = c(),
                        errorBehaviour = "silent") {
+  # We start by checking that the API requester has been initialized:
+  if (!exists(".apiRequesterData", mode = "environment")) {
+    namedStop("APIrequesterInitializationError", "API requester has not been initialized!")
+  }
+
   # The algorithm we use is to rotate through the key, and store for each
   # key when it was most recently used. If that is more recently than 6/10s
   # of a second (the rate at which we are limited being 60 seconds per 100
