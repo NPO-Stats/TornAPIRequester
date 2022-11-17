@@ -11,8 +11,7 @@ unpooledAPIrequest(
   IDtoSend = "",
   comment = "",
   timestampToSend = "",
-  personalStatsToRequest = c(),
-  errorBehaviour = "silent"
+  personalStatsToRequest = c()
 )
 }
 \arguments{
@@ -33,8 +32,6 @@ from which you want the data.}
 
 \item{personalStatsToRequest}{If requesting past personal stats data, this is where you specify the stats
 you want. Expected as a vector of stats. Note that the API does not permit more than ten stats at a time.}
-
-\item{errorBehaviour}{Soon to be deprecated.}
 }
 \value{
 The response of the API, as a list object
