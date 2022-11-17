@@ -17,7 +17,6 @@
 #' from which you want the data.
 #' @param personalStatsToRequest If requesting past personal stats data, this is where you specify the stats
 #' you want. Expected as a vector of stats. Note that the API does not permit more than ten stats at a time.
-#' @param errorBehaviour Soon to be deprecated.
 #'
 #' @return The response of the API, as a list object
 #' @export
@@ -29,8 +28,7 @@ apiRequest <- function(section,
                        IDtoSend = "",
                        comment = "",
                        timestampToSend = "",
-                       personalStatsToRequest = c(),
-                       errorBehaviour = "silent") {
+                       personalStatsToRequest = c()) {
   # We start by checking that the API requester has been initialized:
   if (!exists(".apiRequesterData", mode = "environment")) {
     namedStop("APIrequesterInitializationError", "API requester has not been initialized!")
@@ -68,8 +66,7 @@ apiRequest <- function(section,
     IDtoSend = IDtoSend,
     comment = comment,
     timestampToSend = timestampToSend,
-    personalStatsToRequest = personalStatsToRequest,
-    errorBehaviour = errorBehaviour
+    personalStatsToRequest = personalStatsToRequest
   )
 
   # and we return the result:
