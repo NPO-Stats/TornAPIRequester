@@ -22,7 +22,6 @@
 #' from which you want the data.
 #' @param personalStatsToRequest If requesting past personal stats data, this is where you specify the stats
 #' you want. Expected as a vector of stats. Note that the API does not permit more than ten stats at a time.
-#' @param errorBehaviour Soon to be deprecated.
 #'
 #' @return The response of the API, as a list object
 #' @export
@@ -36,8 +35,7 @@ unpooledAPIrequest <- function(keyToUse,
                                IDtoSend = "",
                                comment = "",
                                timestampToSend = "",
-                               personalStatsToRequest = c(),
-                               errorBehaviour = "silent") {
+                               personalStatsToRequest = c()) {
   # We need to do some input validation:
   if (!((length(section) == 1) && (section %in% c("user", "property", "faction", "company", "market", "torn")))) {
     namedStop("invalidParameterError", "Invalid choice of section for API request!")
@@ -189,26 +187,13 @@ unpooledAPIrequest <- function(keyToUse,
       )
     }
 
-    # Having dealt with the error forms that must always throw or give a warning,
-    # we proceed to deal with the other errors according to user preference:
-    if (errorBehaviour == "silent") {
-      return(requestResult)
-    } else {
-      if (errorBehaviour == "stop") {
-        # Here, we return an error type signalling that the error is from the API, not from failing the request
-        # or our code being wrong: (Possible errors this could be are e,g, that you requested data on a chain ID
-        # that doesn't exist.)
-        namedStop(
-          errorName = "errorFromAPI",
-          message = errorMessage
-        )
-      } else if (errorBehaviour == "warn") {
-        warning(errorMessage)
-        return(requestResult)
-      } else {
-        stop(paste0("You specified an invalid errorBehaviour. Also, your API request returned ", errorMessage))
-      }
-    }
+    # If it is one of the remaining error types, we throw it as an errorFromAPI - this covers attempting
+    # to request data the key doesn't have access to, or requesting data for an invalid ID. Usually these
+    # are the errors that one wants to actually catch upstream.
+    namedStop(
+      errorName = "fromAPIError",
+      message = errorMessage
+    )
   } else {
     # If there was no error, we just return the API response:
     return(requestResult)
