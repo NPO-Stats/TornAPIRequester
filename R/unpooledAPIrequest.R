@@ -179,7 +179,7 @@ unpooledAPIrequest <- function(keyToUse,
       )
     }
     # Getting blocked for the 100 requests per minute limit gives an error of a different type than the APIkeyError ones (since those must always be dealt with by human
-    # action): (This error is then caught by smartAPIRequester, which will wait out the "small period of time".)
+    # action): (This error is then caught by apiRequest, which will wait out the "small period of time".)
     if (requestResult$error$code == 5) { # 5 => Too many requests : Requests are blocked for a small period of time because of too many requests per user (max 100 per minute).
       namedStop(
         errorName = "APIthrottledError",
@@ -187,11 +187,28 @@ unpooledAPIrequest <- function(keyToUse,
       )
     }
 
-    # If it is one of the remaining error types, we throw it as an errorFromAPI - this covers attempting
-    # to request data the key doesn't have access to, or requesting data for an invalid ID. Usually these
-    # are the errors that one wants to actually catch upstream.
+    # If we try to request an ID that doesn't exist, we get an error 6:
+    if (requestResult$error$code == 6) { # Incorrect ID : Wrong ID value.
+      namedStop(
+        errorName = "incorrectIDError",
+        message = glue::glue("API request returned Incorrect ID Error. This is likely caused by ID '{IDtoSend}' not existing in Torn.")
+      )
+    }
+
+    # If we try to request information that the key is not allowed to read, we get an error 7 or 16:
+    # 7 => Incorrect ID-entity relation : A requested selection is private (For example, personal data of another user / faction).
+    # 16 => Access level of this key is not high enough : A selection is being called of which this key does not have permission to access.
+    if (requestResult$error$code %in% c(6,16)) { # Incorrect ID : Wrong ID value.
+      namedStop(
+        errorName = "insufficientAccessLevelError",
+        message = glue::glue("API request returned Error {requestResult$error$code}. This means the key used does not have access to the requested field.")
+      )
+    }
+
+    # If it is one of the remaining error types, we throw it as an otherFromAPIError - this covers a few very
+    # rare errors that should be caused by the Torn side.
     namedStop(
-      errorName = "fromAPIError",
+      errorName = "otherFromAPIError",
       message = errorMessage
     )
   } else {
