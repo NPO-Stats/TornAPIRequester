@@ -205,6 +205,16 @@ unpooledAPIrequest <- function(keyToUse,
       )
     }
 
+    # The API can sometimes suffer backend errors, which are communicated to us as error
+    # code 17. The recommended thing to do is to wait and try again, which apiRequest will
+    # do, so we throw with a different error class:
+    if (requestResult$error$code == 17) { # 17 => Backend error occurred, please try again.
+      namedStop(
+        errorName = "APIbackendError",
+        message = "The API suffered a backend error."
+      )
+    }
+
     # If it is one of the remaining error types, we throw it as an otherFromAPIError - this covers a few very
     # rare errors that should be caused by the Torn side.
     namedStop(

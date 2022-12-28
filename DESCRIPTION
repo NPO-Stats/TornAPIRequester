@@ -1,7 +1,7 @@
 Package: TornAPIRequester
 Type: Package
 Title: Send Requests to the Torn API
-Version: 0.1.0
+Version: 0.1.1
 Author: saxasm
 Maintainer: saxasm#9869 / saxasm [2720534] <no@ema.il>
 Description: Sends requests to the Torn API, with extra safety checks and error handling.

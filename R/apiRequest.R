@@ -60,13 +60,43 @@ apiRequest <- function(section,
 
   # Now we are sure that the key is fresh enough to be reused, so we can
   # proceed to make the request:
-  queryResult <- unpooledAPIrequest(
-    .apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
-    section = section, selection = selection,
-    IDtoSend = IDtoSend,
-    comment = comment,
-    timestampToSend = timestampToSend,
-    personalStatsToRequest = personalStatsToRequest
+  queryResult <- tryCatch(
+    unpooledAPIrequest(
+      .apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
+      section = section, selection = selection,
+      IDtoSend = IDtoSend,
+      comment = comment,
+      timestampToSend = timestampToSend,
+      personalStatsToRequest = personalStatsToRequest
+    ),
+    APIthrottledError = function(e) {
+      # This error is caused by us breaching the 100 requests per minute limit. So, we wait
+      # a minute and then try again.
+      message("API limit of 100 requests per minute reached. We will wait one minute and try again.")
+      Sys.sleep(60)
+      unpooledAPIrequest(
+        .apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
+        section = section, selection = selection,
+        IDtoSend = IDtoSend,
+        comment = comment,
+        timestampToSend = timestampToSend,
+        personalStatsToRequest = personalStatsToRequest
+      )
+    },
+    APIbackendError = function(e) {
+      # This error is caused by general API flakiness, and the recommended thing to do is
+      # to wait and try again. We do so.
+      message("API has suffered a backend error. We will wait ten seconds and try again.")
+      Sys.sleep(10)
+      unpooledAPIrequest(
+        .apiRequesterData$apiKeys[.apiRequesterData$mostRecentKeyUsed],
+        section = section, selection = selection,
+        IDtoSend = IDtoSend,
+        comment = comment,
+        timestampToSend = timestampToSend,
+        personalStatsToRequest = personalStatsToRequest
+      )
+    }
   )
 
   # and we return the result:
