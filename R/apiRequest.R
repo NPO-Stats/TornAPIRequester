@@ -30,7 +30,7 @@ apiRequest <- function(section,
                        timestampToSend = "",
                        personalStatsToRequest = c()) {
   # We start by checking that the API requester has been initialized:
-  if (!exists(".apiRequesterData", mode = "environment")) {
+  if (!.apiRequesterData$initialized) {
     namedStop("APIrequesterInitializationError", "API requester has not been initialized!")
   }
 

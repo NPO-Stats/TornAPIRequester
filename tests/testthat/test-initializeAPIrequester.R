@@ -3,5 +3,5 @@ test_that("initialization from environment variable works", {
   skip_if_not("TAPIR_INIT" %in% names(Sys.getenv()))
 
   # and since it is in the environment, initializeAPIrequester requires no arguments:
-  expect_true(initializeAPIrequester())
+  expect_message(initializeAPIrequester(), class = "successfulTAPIRinit")
 })

@@ -1,3 +1,8 @@
+# We store the API requester's internal state in an environment inside the package
+# environment:
+.apiRequesterData <- new.env(parent = emptyenv())
+.apiRequesterData$initialized <- FALSE
+
 #' Initialize the API requester
 #'
 #' Used to set the keys to be used for the API key pooling. This function also sets
@@ -13,7 +18,6 @@
 #' @param apiKeyNames Names for the API keys, that will be displayed in error messages. Should normally be the name of the owner of the key. Optional, but very useful for error messages.
 #' @param JSONinitData A string that can be parsed by the jsonlite-package JSON reader. Could be actual JSON in a string, or the path to a file or a URL from which to read it. Note that this format requires names for the API keys.
 #'
-#' @return TRUE, if initialization was successful.
 #' @export
 
 initializeAPIrequester <- function(appName = NULL, apiKeys = NULL, apiKeyNames = NULL, JSONinitData = NULL) {
@@ -43,20 +47,18 @@ initializeAPIrequester <- function(appName = NULL, apiKeys = NULL, apiKeyNames =
   # Now, irrespective of how we got our data, it is in the appName/apiKeys/keyNames variables,
   # and we can proceed as if that was how we got the data.
 
-  # Start by checking if the apiRequesterData environment already exists. If
-  # it does, we will update its contents, if not, we start by creating it.
-  if (!exists(".apiRequesterData")) {
-    .apiRequesterData <<- rlang::env(
-      appName = appName,
-      apiKeys = apiKeys
-    )
-  } else {
-    .apiRequesterData$appName <- appName
-    .apiRequesterData$apiKeys <- apiKeys
-  }
-
+  # We put the data into the .apiRequesterData environment:
+  .apiRequesterData$appName <- appName
+  .apiRequesterData$apiKeys <- apiKeys
   .apiRequesterData$numAPIkeys <- length(apiKeys)
   .apiRequesterData$mostRecentKeyUsed <- 1
   .apiRequesterData$APIkeysMostRecentUse <- lapply(1:.apiRequesterData$numAPIkeys, function(n) Sys.time())
-  return(TRUE)
+
+  # Finally, inform the user that we were successful and set the "initialized" variable
+  # in the environment:
+  .apiRequesterData$initialized <- TRUE
+  rlang::inform(
+    message = "Successfully initialized API requester.",
+    class = "successfulTAPIRinit"
+  )
 }
